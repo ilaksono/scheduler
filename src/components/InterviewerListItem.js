@@ -1,16 +1,16 @@
 import React from 'react';
 import classNames from 'classnames';
 import './InterviewerListItem.scss'
-export default function InterviewerListItem(props) {
-  const liClassName = classNames('interviewers__item',{'interviewers__item--selected':props.selected});
+export default function InterviewerListItem(p) {
+  const liClassName = classNames('interviewers__item',{'interviewers__item--selected':p.selected});
   return (
-    <li className={liClassName} onClick={props.setInterviewer}>
+    <li className={liClassName} onClick={p.setInterviewer}>
       <img
         className="interviewers__item-image"
-        src={props.avatar}
+        src={p.avatar}
         alt="Sylvia Palmer"
       />
-      {props.selected && props.name}
+      {p.selected && p.name}
     </li>
   );
 }

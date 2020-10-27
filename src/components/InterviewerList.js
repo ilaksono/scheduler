@@ -5,16 +5,16 @@ import InterviewerListItem from './InterviewerListItem';
 
 
 
-export default function InterviewerList(props) {
-    const ints = props.interviewers;
+export default function InterviewerList(p) {
+    const ints = p.interviewers;
     const intsParsed = ints.map((inter) => {
       return(
         <InterviewerListItem 
         key={inter.id} 
         name={inter.name} 
         avatar={inter.avatar}
-        setInterviewer={(event) => props.setInterviewer(inter.id)}
-        selected={inter.id === props.interviewer}/>
+        setInterviewer={(event) => p.onChange(inter.id)}
+        selected={inter.id === p.value}/>
       )
     })
   return (
