@@ -1,12 +1,12 @@
 import React from 'react';
 import './styles.scss';
-import Error from './Error';
-import Form from './Form';
 import Empty from './Empty';
 import Header from './Header';
 import Show from './Show';
-import Status from './Status';
-import Confirm from './Confirm';
+// import Error from './Error';
+// import Form from './Form';
+// import Status from './Status';
+// import Confirm from './Confirm';
 
 export default function Appointment(p) {
   const {student, interviewer} = p.interview || {};
