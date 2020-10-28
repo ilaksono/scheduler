@@ -20,7 +20,6 @@ const ERROR_DELETE = 'ERROR_DELETE';
 
 export default function Appointment(p) {
   const { student, interviewer } = p.interview || {};
-  // console.log(p.interview);
   const { mode, transition, back } = useVisualMode(p.interview ? SHOW : EMPTY);
   const [errMsg, setErrMsg] = useState('');
   const save = (name, inter) => {
@@ -54,19 +53,11 @@ export default function Appointment(p) {
     back();
     back();
   };
-
-  const edit = () => {
-    // console.log(student, interviewer);
-    transition(EDIT);
-  };
-
+  const edit = () => transition(EDIT);
   const msg = 'Are you sure you would like to delete?';
-
-
   return (
     <article className="appointment">
       <Header id={p.id} time={p.time} />
-      {/* {p.interview ? <Show student={student} interviewer={interviewer}/> : <Empty/>} */}
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (
         <Show
