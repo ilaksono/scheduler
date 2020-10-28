@@ -39,11 +39,13 @@ export default function Application() {
       ...state.appointments,
       [id]: appointment
     };
-    setState({...state, appointments});
+    
     return axios({ method: 'delete', url:`/api/appointments/${id}`})
-    .then(response => console.log(response));
+    .then(() => setState({...state, appointments}));
 
   };
+
+
 
   useEffect(() => {
     const p1 = axios.get('/api/days');
