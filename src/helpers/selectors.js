@@ -18,7 +18,7 @@ export const getInterview = (state, interview) => {
     interviewerJson = Object.values(state.interviewers).filter(val => val.id === interviewerID)[0];
     interviewJson = {
       student: interview.student,
-      interviewer: interviewerJson
+      interviewer: {...interviewerJson}
     };
     return interviewJson;
   }
