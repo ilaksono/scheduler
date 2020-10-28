@@ -24,3 +24,13 @@ export const getInterview = (state, interview) => {
   }
   return null;
 };
+export const getInterviewersForDay = (state, dayName) => {
+  const filteredDay = state.days
+    .filter(day => day.name === dayName) || [];
+  let filteredInts = [];
+  if (filteredDay[0] && filteredDay[0].interviewers) {
+    filteredInts = filteredDay[0].interviewers
+      .map(interId => state.interviewers[`${interId}`]);
+  }
+  return filteredInts;
+};

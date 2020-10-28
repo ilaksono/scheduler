@@ -4,7 +4,6 @@ import Empty from './Empty';
 import Header from './Header';
 import Show from './Show';
 import useVisualMode from "hooks/useVisualMode";
-
 // import Error from './Error';
 import Form from './Form';
 // import Status from './Status';
@@ -29,7 +28,7 @@ export default function Appointment(p) {
           interviewer={interviewer}
         />
       )}
-      {mode === CREATE && <Form onCancel={back} interviewers={[]}/>}
+      {mode === CREATE && <Form onCancel={back} interviewers={p.interviewers}/>}
 
     </article>
   );
