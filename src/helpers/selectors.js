@@ -8,3 +8,19 @@ export const getAppointmentsForDay = (state, dayName) => {
   }
   return filteredApps;
 };
+
+export const getInterview = (state, interview) => {
+  let interviewerJson = {};
+  let interviewJson = {};
+  let interviewerID;
+  if (interview) {
+    interviewerID = interview.interviewer;
+    interviewerJson = Object.values(state.interviewers).filter(val => val.id === interviewerID)[0];
+    interviewJson = {
+      student: interview.student,
+      interviewer: interviewerJson
+    };
+    return interviewJson;
+  }
+  return null;
+};
