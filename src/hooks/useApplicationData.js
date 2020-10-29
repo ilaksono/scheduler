@@ -1,5 +1,30 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useReducer } from "react";
 import axios from 'axios';
+
+const reducer = (state, action) => {
+
+  switch(action.type) {
+    case 'setDay': return {...state, day:action.day};
+    case 'bookInterview': {
+      const {interview, id} = action;
+      const appointment = {
+        ...state.appointments[id],
+        interview: { ...interview }
+      };
+      const appointments = {
+        ...state.appointments,
+        [id]: appointment
+      };
+      return axios({ method: 'put', data: { interview }, url: `/api/appointments/${id}` })
+        .then(() => axios.get('/api/days')
+          .then(data => ({ ...state, appointments, days: data.data }))
+        );
+    }
+    case 'cancelInterview': {
+      
+    }
+  }
+}
 
 const useApplicationData = () => {
   const [state, setState] = useState({
@@ -8,7 +33,13 @@ const useApplicationData = () => {
     appointments: {},
     interviewers: {}
   });
-  const setDay = day => setState({ ...state, day });
+  const [state, dispatch] = useReducer({
+    day: 'Monday',
+    days: [],
+    appointments: {},
+    interviewers: {}
+  }, reducer);
+  // const setDay = day => setState({ ...state, day });
   const bookInterview = (id, interview) => {
     const appointment = {
       ...state.appointments[id],
