@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './styles.scss';
 import Empty from './Empty';
 import Header from './Header';
@@ -54,6 +54,9 @@ export default function Appointment(p) {
   };
   const edit = () => transition(EDIT);
   const msg = 'Are you sure you would like to delete?';
+  useEffect(() => {
+    p.interview ? transition(SHOW) : transition(EMPTY);
+  }, [p.interview]);
   return (
     <article className="appointment">
       <Header id={p.id} time={p.time} />

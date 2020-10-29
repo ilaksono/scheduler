@@ -1,10 +1,18 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
-
+const socket = new WebSocket('ws://localhost:8001');
+socket.onopen = () => {
+  socket.send('ping');
+  console.log('connected');
+};
+socket.onclose = () => {
+  console.log('we died');
+};
 const SET_DATA = 'SET_DATA';
 const BOOK = 'BOOK';
 const CANCEL = 'CANCEL';
 const SET_DAY = 'SET_DAY';
+const SET_INTERVIEW = 'SET_INTERVIEW';
 
 function reducer(state, action) {
   switch (action.type) {
@@ -21,8 +29,13 @@ function reducer(state, action) {
     }
     case SET_DATA: {
       const { days, appointments, interviewers } = action;
-      console.log(action);
       return { ...state, days, appointments, interviewers };
+    }
+    case SET_INTERVIEW: {
+      const { interview, id, days } = action;
+      const appointments = { ...state['appointments'] };
+      appointments[`${id}`].interview = interview;
+      return { ...state, appointments, days };
     }
     default:
       throw new Error(`Tried to reduce with unsupported action type: ${action.type}`);
@@ -51,8 +64,21 @@ export default function useApplicationData() {
         });
       });
   }, []);
+
+  useEffect(() => {
+
+    socket.addEventListener('message', function (event) {
+      const update = JSON.parse(event.data);
+      console.log(update);
+      if (update.type) {
+        const { interview, id } = update;
+        axios.get('api/days')
+          .then(data => dispatch({ type: update.type, interview, id, days: data.data }));
+      }
+    });
+  }, []);
   function setDay(day) {
-    dispatch({ type: 'SET_DAY', day });
+    dispatch({ type: SET_DAY, day });
   }
   function bookInterview(id, interview) {
     const appointment = {
@@ -66,10 +92,11 @@ export default function useApplicationData() {
     return axios({ method: 'put', data: { interview }, url: `/api/appointments/${id}` })
       .then(() => axios.get('/api/days').then(data => {
         dispatch({
-          type: 'BOOK',
+          type: BOOK,
           appointments,
           days: data.data
         });
+        // socket.send('CREATE');
         return state;
       }));
   };

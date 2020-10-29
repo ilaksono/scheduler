@@ -14,8 +14,9 @@ export default function Application() {
       interview = getInterview(state, appointment.interview);
     return <Appointment key={appointment.id} bookInterview={bookInterview} cancelInterview={cancelInterview} id={appointment.id} time={appointment.time} interview={interview} interviewers={interviewers} />;
   });
+  
   parsedApps.push(<Appointment key="last" time="5pm" />);
-
+  console.log(state);
   return (
     <main className="layout">
       <section className="sidebar">
