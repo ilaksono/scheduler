@@ -5,7 +5,7 @@ import DayList from './DayList';
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "../helpers/selectors";
 import useApplicationData from 'hooks/useApplicationData';
 export default function Application() {
-  const {state, setDay, bookInterview, cancelInterview } = useApplicationData();
+  const { state, setDay, bookInterview, cancelInterview } = useApplicationData();
   const interviewers = getInterviewersForDay(state, state.day);
   const dayAppointments = getAppointmentsForDay(state, state.day);
   const parsedApps = dayAppointments.map(appointment => {
@@ -15,6 +15,7 @@ export default function Application() {
     return <Appointment key={appointment.id} bookInterview={bookInterview} cancelInterview={cancelInterview} id={appointment.id} time={appointment.time} interview={interview} interviewers={interviewers} />;
   });
   parsedApps.push(<Appointment key="last" time="5pm" />);
+
   return (
     <main className="layout">
       <section className="sidebar">
@@ -25,11 +26,12 @@ export default function Application() {
         />
         <hr className="sidebar__separator sidebar--centered" />
         <nav className="sidebar__menu">
-          <DayList
+         {state.day && <DayList
             days={state.days}
             day={state.day}
             setDay={setDay}
           />
+        }
         </nav>
         <img
           className="sidebar__lhl sidebar--centered"

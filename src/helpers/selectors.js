@@ -1,6 +1,10 @@
 export const getAppointmentsForDay = (state, dayName) => {
-  const filteredDay = state.days
-    .filter(day => day.name === dayName) || [];
+  let filteredDay = [];
+  console.log(state);
+  if (state.day) {
+    filteredDay = state.days
+      .filter(day => day.name === dayName) || [];
+  }
   let filteredApps = [];
   if (filteredDay[0]) {
     filteredApps = filteredDay[0].appointments
@@ -18,17 +22,20 @@ export const getInterview = (state, interview) => {
     interviewerJson = Object.values(state.interviewers).filter(val => val.id === interviewerID)[0];
     interviewJson = {
       student: interview.student,
-      interviewer: {...interviewerJson}
+      interviewer: { ...interviewerJson }
     };
     return interviewJson;
   }
   return null;
 };
 export const getInterviewersForDay = (state, dayName) => {
-  const filteredDay = state.days
-    .filter(day => day.name === dayName) || [];
+  let filteredDay=[];
+  if (state.day) {
+    filteredDay = state.days
+      .filter(day => day.name === dayName) || [];
+  }
   let filteredInts = [];
-  if (filteredDay[0] && filteredDay[0].interviewers) {
+  if (filteredDay[0] && state.day) {
     filteredInts = filteredDay[0].interviewers
       .map(interId => state.interviewers[`${interId}`]);
   }
