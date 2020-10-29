@@ -11,6 +11,10 @@ export default function Form(p) {
     p.onCancel();
     reset();
   }
+  const handleOnChange = (event) => {
+    setName(event.target.value);
+    p.setErrMsg('');
+  }
   const [name, setName] = useState(p.name || '');
   const [interviewer, setInterviewer] = useState(p.interviewer || null);
   return (
@@ -23,10 +27,11 @@ export default function Form(p) {
             type="text"
             placeholder="Enter Student Name"
             value={name}
-            onChange={(event) => setName(event.target.value)}
+            onChange={(event) => handleOnChange(event)}
           />
         </form>
-        <InterviewerList interviewers={p.interviewers} value={interviewer} onChange={setInterviewer}  />
+        <InterviewerList setErrMsg={p.setErrMsg} interviewers={p.interviewers} value={interviewer} onChange={setInterviewer}  />
+        {p.errMsg && p.errMsg}
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">

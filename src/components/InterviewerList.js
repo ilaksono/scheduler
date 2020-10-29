@@ -14,6 +14,7 @@ export default function InterviewerList(p) {
         key={inter.id} 
         name={inter.name} 
         avatar={inter.avatar}
+        setErrMsg={p.setErrMsg}
         setInterviewer={(event) => p.onChange(inter.id)}
         selected={inter.id === p.value}/>
       )

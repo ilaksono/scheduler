@@ -23,6 +23,8 @@ export default function Appointment(p) {
   const { mode, transition, back } = useVisualMode(p.interview ? SHOW : EMPTY);
   const [errMsg, setErrMsg] = useState('');
   const save = (name, inter) => {
+    if (!name) return setErrMsg('Must include name');
+    if (!inter) return setErrMsg('Must choose interviewer');
     transition(SAVING);
     const interview = {
       student: name,
@@ -69,11 +71,11 @@ export default function Appointment(p) {
           onEdit={edit}
         />
       )}
-      {mode === CREATE && <Form onCancel={back} onSave={save} interviewers={p.interviewers} />}
+      {mode === CREATE && <Form onCancel={back} onSave={save} interviewers={p.interviewers} setErrMsg={setErrMsg} errMsg={errMsg}/>}
       {mode === SAVING && <Status message='Saving' />}
       {mode === DELETING && <Status message='Deleting' />}
       {mode === CONFIRM && <Confirm id={p.id} onCancel={cancelConfirm} message={msg} onConfirm={destoy} />}
-      {mode === EDIT && <Form name={student} interviewer={interviewer.id} onCancel={back} onSave={save} interviewers={p.interviewers} />}
+      {mode === EDIT && <Form name={student} interviewer={interviewer.id} onCancel={back} onSave={save} interviewers={p.interviewers} setErrMsg={setErrMsg} errMsg={errMsg}/>}
       {mode === ERROR_SAVE && <Error message={errMsg} onClose={errorClose} />}
       {mode === ERROR_DELETE && <Error message={errMsg} onClose={errorClose} />}
 

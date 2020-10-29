@@ -9,6 +9,7 @@ export default function InterviewerListItem(p) {
         className="interviewers__item-image"
         src={p.avatar}
         alt="Sylvia Palmer"
+        onClick={() => p.setErrMsg('')}
       />
       {p.selected && p.name}
     </li>
