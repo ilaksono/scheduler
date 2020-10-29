@@ -7,6 +7,7 @@ import InterviewerListItem from './InterviewerListItem';
 
 export default function InterviewerList(p) {
     const ints = p.interviewers;
+    
     const intsParsed = ints.map((inter) => {
       return(
         <InterviewerListItem 

@@ -1,21 +1,27 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
 
+const SET_DATA = 'SET_DATA';
+const BOOK = 'BOOK';
+const CANCEL = 'CANCEL';
+const SET_DAY = 'SET_DAY';
+
 function reducer(state, action) {
   switch (action.type) {
-    case 'setDay': {
+    case SET_DAY: {
       return { ...state, day: action.day };
     }
-    case 'bookInterview': {
+    case BOOK: {
       const { appointments, days } = action;
       return { ...state, appointments, days };
     }
-    case 'cancelInterview': {
+    case CANCEL: {
       const { appointments, days } = action;
       return ({ ...state, appointments, days });
     }
-    case 'setData': {
+    case SET_DATA: {
       const { days, appointments, interviewers } = action;
+      console.log(action);
       return { ...state, days, appointments, interviewers };
     }
     default:
@@ -37,12 +43,16 @@ export default function useApplicationData() {
     const p3 = axios.get('/api/interviewers');
     Promise.all([p1, p2, p3])
       .then(all => {
-        dispatch({ type: 'setData', days: all[0].data, appointments: all[1].data, interviewers: all[2].data });
+        dispatch({
+          type: 'SET_DATA',
+          days: all[0].data,
+          appointments: all[1].data,
+          interviewers: all[2].data
+        });
       });
-
   }, []);
   function setDay(day) {
-    dispatch({ type: 'setDay', day });
+    dispatch({ type: 'SET_DAY', day });
   }
   function bookInterview(id, interview) {
     const appointment = {
@@ -55,10 +65,13 @@ export default function useApplicationData() {
     };
     return axios({ method: 'put', data: { interview }, url: `/api/appointments/${id}` })
       .then(() => axios.get('/api/days').then(data => {
-        dispatch({ type: 'bookInterview', appointments, days: data.data });
+        dispatch({
+          type: 'BOOK',
+          appointments,
+          days: data.data
+        });
         return state;
       }));
-
   };
   function cancelInterview(id) {
     const appointment =
@@ -69,7 +82,11 @@ export default function useApplicationData() {
       .then(() => {
         return axios.get('/api/days');
       }).then(data => {
-        dispatch({ type: 'cancelInterview', id, appointment, appointments, days: data.data });
+        dispatch({
+          type: 'CANCEL',
+          appointments,
+          days: data.data
+        });
         return state;
       });
   };

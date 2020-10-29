@@ -1,6 +1,5 @@
 export const getAppointmentsForDay = (state, dayName) => {
   let filteredDay = [];
-  console.log(state);
   if (state.day) {
     filteredDay = state.days
       .filter(day => day.name === dayName) || [];

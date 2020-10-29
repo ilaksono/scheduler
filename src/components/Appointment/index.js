@@ -48,7 +48,6 @@ export default function Appointment(p) {
         transition(ERROR_DELETE, true);
       });
   };
-
   const errorClose = () => {
     back();
     back();
