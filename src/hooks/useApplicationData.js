@@ -3,11 +3,8 @@ import axios from 'axios';
 const socket = new WebSocket('ws://localhost:8001');
 socket.onopen = () => {
   socket.send('ping');
-  console.log('connected');
 };
-socket.onclose = () => {
-  console.log('we died');
-};
+
 const SET_DATA = 'SET_DATA';
 const BOOK = 'BOOK';
 const CANCEL = 'CANCEL';
@@ -69,7 +66,6 @@ export default function useApplicationData() {
 
     socket.addEventListener('message', function (event) {
       const update = JSON.parse(event.data);
-      console.log(update);
       if (update.type) {
         const { interview, id } = update;
         axios.get('api/days')

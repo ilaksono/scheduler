@@ -16,7 +16,6 @@ export default function Application() {
   });
   
   parsedApps.push(<Appointment key="last" time="5pm" />);
-  console.log(state);
   return (
     <main className="layout">
       <section className="sidebar">
