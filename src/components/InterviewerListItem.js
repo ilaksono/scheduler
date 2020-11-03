@@ -8,8 +8,9 @@ export default function InterviewerListItem(p) {
       <img
         className="interviewers__item-image"
         src={p.avatar}
-        alt="Sylvia Palmer"
+        alt={p.name}
         onClick={() => p.setErrMsg('')}
+        data-testid='int-img'
       />
       {p.selected && p.name}
     </li>

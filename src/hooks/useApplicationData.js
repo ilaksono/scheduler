@@ -1,6 +1,8 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
-const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+// const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+const socket = new WebSocket('ws://localhost:8001');
+
 socket.onopen = () => {
   socket.send('ping');
 };
@@ -63,7 +65,6 @@ export default function useApplicationData() {
   }, []);
 
   useEffect(() => {
-
     socket.addEventListener('message', function (event) {
       const update = JSON.parse(event.data);
       if (update.type) {
@@ -85,7 +86,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    return axios({ method: 'put', data: { interview }, url: `/api/appointments/${id}` })
+    return axios.put(`/api/appointments/${id}`,{ interview })
       .then(() => axios.get('/api/days').then(data => {
         dispatch({
           type: BOOK,
@@ -101,7 +102,7 @@ export default function useApplicationData() {
       { ...state.appointments[id], interview: null };
     const appointments =
       { ...state.appointments, [id]: appointment };
-    return axios({ method: 'delete', url: `/api/appointments/${id}` })
+    return axios.delete(`/api/appointments/${id}`)
       .then(() => {
         return axios.get('/api/days');
       }).then(data => {

@@ -23,7 +23,7 @@ export default function Appointment(p) {
   const { mode, transition, back } = useVisualMode(p.interview ? SHOW : EMPTY);
   const [errMsg, setErrMsg] = useState('');
   const save = (name, inter) => {
-    if (!name) return setErrMsg('Must include name');
+    if (!name) return setErrMsg('Student name cannot be blank');
     if (!inter) return setErrMsg('Must choose interviewer');
     transition(SAVING);
     const interview = {
@@ -60,7 +60,7 @@ export default function Appointment(p) {
     p.interview ? transition(SHOW) : transition(EMPTY);
   }, [p.interview]);
   return (
-    <article className="appointment">
+    <article className="appointment" data-testid="appointment">
       <Header id={p.id} time={p.time} />
       {mode === EMPTY && <Empty onAdd={() => transition(CREATE)} />}
       {mode === SHOW && (

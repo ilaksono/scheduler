@@ -28,15 +28,16 @@ export default function Form(p) {
             placeholder="Enter Student Name"
             value={name}
             onChange={(event) => handleOnChange(event)}
+            data-testid="student-name-input"
           />
         </form>
-        <InterviewerList setErrMsg={p.setErrMsg} interviewers={p.interviewers} value={interviewer} onChange={setInterviewer}  />
-        {p.errMsg && p.errMsg}
+        <section className="appointment__validation">{p.errMsg && p.errMsg}</section>
+        {p.interviewers && <InterviewerList setErrMsg={p.setErrMsg} interviewers={p.interviewers} value={interviewer} onChange={setInterviewer}  />}
       </section>
       <section className="appointment__card-right">
         <section className="appointment__actions">
           <Button onClick={cancel} danger>Cancel</Button>
-          <Button onClick={() => p.onSave(name, interviewer)} confirm>Save</Button>
+          <Button onClick={(event) => p.onSave(name, interviewer)} confirm>Save</Button>
         </section>
       </section>
     </main>

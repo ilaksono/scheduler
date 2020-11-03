@@ -1,6 +1,7 @@
 import { getAppointmentsForDay, getInterview, getInterviewersForDay } from "helpers/selectors";
 
 const state = {
+  day:'Monday',
   days: [
     {
       id: 1,
