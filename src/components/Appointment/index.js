@@ -58,7 +58,7 @@ export default function Appointment(p) {
   const msg = 'Are you sure you would like to delete?';
   useEffect(() => {
     p.interview ? transition(SHOW) : transition(EMPTY);
-  }, [p.interview]);
+  }, [p.interview, transition]);
   return (
     <article className="appointment" data-testid="appointment">
       <Header id={p.id} time={p.time} />
