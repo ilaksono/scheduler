@@ -1,12 +1,7 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
 import { reducer, SET_DATA, SET_DAY, CANCEL, BOOK } from 'reducers/application.js';
-const baseURL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8001';
-const socket = new WebSocket(baseURL);
 
-socket.onopen = () => {
-  socket.send('ping');
-};
 
 const initData = {
   day: 'Monday',
@@ -34,6 +29,12 @@ export default function useApplicationData() {
   }, []);
 
   useEffect(() => { // on mount - add websocket listener to trigger render on update
+    const baseURL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8001';
+    const socket = new WebSocket(baseURL);
+
+    socket.onopen = () => {
+      socket.send('ping');
+    };
     socket.addEventListener('message', function (event) {
       const update = JSON.parse(event.data);
       if (update.type) { // check type of parsed message to filter messages
