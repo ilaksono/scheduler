@@ -31,7 +31,6 @@ export default function useApplicationData() {
   useEffect(() => { // on mount - add websocket listener to trigger render on update
     const baseURL = process.env.REACT_APP_WEBSOCKET_URL || 'ws://localhost:8001';
     const socket = new WebSocket(baseURL);
-
     socket.onopen = () => {
       socket.send('ping');
     };
