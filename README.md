@@ -60,7 +60,7 @@ Front-end framework to render html elements
 **The following hooks can be found in /src/hooks:**
 
 - `useApplicationData()`: returns parent state for Application, and methods to create/delete interviews to pass in child components
-- `useVisualMode()`: returns an instance of state - transition method, and current mode for each appointment article
+- `useVisualMode()`: returns an instance of state - transition method, current mode, and history array for each appointment article
 
 ## Dependencies
 
@@ -79,10 +79,10 @@ Front-end framework to render html elements
 
 ## Testing and mocks
 
-- Cypress
-- storybook
-- Jest
-- react-testing-library
+- Cypress [(/cypress)](/cypress)
+- storybook [(/src/stories)](/src/stories)
+- Jest [(/src/__tests__)](/src/__tests__)
+- react-testing-library [/src/__tests__](/src/__tests__)
 
 ## Stretch
 

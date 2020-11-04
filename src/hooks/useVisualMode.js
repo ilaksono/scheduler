@@ -1,5 +1,6 @@
 import { useState } from 'react';
 
+// hook sets state - mode and history to render correct appointment display
 export default function useVisualMode(initial) {
   const [mode, setMode] = useState(initial);
   const [history, setHistory] = useState([initial]);
@@ -10,10 +11,10 @@ export default function useVisualMode(initial) {
   };
   const back = () => {
     if (history.length > 1) {
-      let cpy = [...history];
-      cpy.pop();
-      setHistory([...cpy]);
-      setMode(cpy.pop());
+      let cpy = [...history]; // create copy of history array
+      cpy.pop(); // remove last element when reverting route
+      setHistory([...cpy]); // then set history to removed version 
+      setMode(cpy.pop()); // change display render to last element of history
     }
   };
   return {

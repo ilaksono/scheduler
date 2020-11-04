@@ -5,6 +5,7 @@ const SET_DAY = 'SET_DAY';
 const SET_INTERVIEW = 'SET_INTERVIEW';
 
 
+// reducer function switch to set appointments/days/interviews state 
 export function reducer(state, action) {
 
   switch (action.type) {
