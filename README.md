@@ -12,7 +12,7 @@ This project was created and published by me as part of my learnings at Lighthou
 
 **Client Server Deployed on Netlify**
 **Accessible by internet network at:**
-[https://5fa21cd27ce8c30007112e06--reverent-jepsen-d3213f.netlify.app/](https://5fa21cd27ce8c30007112e06--reverent-jepsen-d3213f.netlify.app/)
+[https://5fa21cd27ce8c30007112e06--reverent-jepsen-d3213f.netlify.app/](https://5fa21cd27ce8c30007112e06--reverent-jepsen-d3213f.netlify.app/) *may take few seconds to load*
 
 ## Requires/Imports
 
