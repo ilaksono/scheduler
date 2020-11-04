@@ -1,8 +1,8 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
 import { reducer, SET_DATA, SET_DAY, CANCEL, BOOK } from 'reducers/application.js';
-// const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
-const socket = new WebSocket('ws://localhost:8001');
+const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
+// const socket = new WebSocket('ws://localhost:8001');
 
 socket.onopen = () => {
   socket.send('ping');
