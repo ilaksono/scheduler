@@ -58,7 +58,9 @@ export default function Appointment(p) {
   const msg = 'Are you sure you would like to delete?';
   useEffect(() => {
     p.interview ? transition(SHOW) : transition(EMPTY);
-  }, [p.interview, transition]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [p.interview]);
+  
   return (
     <article className="appointment" data-testid="appointment">
       <Header id={p.id} time={p.time} />
