@@ -85,11 +85,12 @@ export default {
     /* Resolve appointments data */
     return Promise.resolve({
       status: 200,
-      statusText: "No Content",      
+      statusText: "No Content",
     })
-    .then(() => {
-      fixtures.days[1].spots--;
-    });
+      .then(() => {
+        if (fixtures.days[1].spots)
+          fixtures.days[1].spots--;
+      });
   }),
   delete: jest.fn(url => {
 
@@ -97,8 +98,10 @@ export default {
     return Promise.resolve({
       status: 200,
       statusText: "OK",
-      data: fixtures.appointments
-    });
+    })
+      .then(() => {
+        fixtures.days[0].spots++;
+      });
 
   })
 

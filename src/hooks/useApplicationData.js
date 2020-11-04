@@ -1,5 +1,6 @@
 import { useEffect, useReducer } from "react";
 import axios from 'axios';
+import { reducer, SET_DATA, SET_DAY, CANCEL, BOOK } from 'reducers/application.js';
 // const socket = new WebSocket(process.env.REACT_APP_WEBSOCKET_URL);
 const socket = new WebSocket('ws://localhost:8001');
 
@@ -7,39 +8,6 @@ socket.onopen = () => {
   socket.send('ping');
 };
 
-const SET_DATA = 'SET_DATA';
-const BOOK = 'BOOK';
-const CANCEL = 'CANCEL';
-const SET_DAY = 'SET_DAY';
-const SET_INTERVIEW = 'SET_INTERVIEW';
-
-function reducer(state, action) {
-  switch (action.type) {
-    case SET_DAY: {
-      return { ...state, day: action.day };
-    }
-    case BOOK: {
-      const { appointments, days } = action;
-      return { ...state, appointments, days };
-    }
-    case CANCEL: {
-      const { appointments, days } = action;
-      return ({ ...state, appointments, days });
-    }
-    case SET_DATA: {
-      const { days, appointments, interviewers } = action;
-      return { ...state, days, appointments, interviewers };
-    }
-    case SET_INTERVIEW: {
-      const { interview, id, days } = action;
-      const appointments = { ...state['appointments'] };
-      appointments[`${id}`].interview = interview;
-      return { ...state, appointments, days };
-    }
-    default:
-      throw new Error(`Tried to reduce with unsupported action type: ${action.type}`);
-  }
-};
 const initData = {
   day: 'Monday',
   days: [],
@@ -56,7 +24,7 @@ export default function useApplicationData() {
     Promise.all([p1, p2, p3])
       .then(all => {
         dispatch({
-          type: 'SET_DATA',
+          type: SET_DATA,
           days: all[0].data,
           appointments: all[1].data,
           interviewers: all[2].data
@@ -86,7 +54,7 @@ export default function useApplicationData() {
       ...state.appointments,
       [id]: appointment
     };
-    return axios.put(`/api/appointments/${id}`,{ interview })
+    return axios.put(`/api/appointments/${id}`, { interview })
       .then(() => axios.get('/api/days').then(data => {
         dispatch({
           type: BOOK,
@@ -107,7 +75,7 @@ export default function useApplicationData() {
         return axios.get('/api/days');
       }).then(data => {
         dispatch({
-          type: 'CANCEL',
+          type: CANCEL,
           appointments,
           days: data.data
         });
