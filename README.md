@@ -19,11 +19,11 @@ This project was created and published by me as part of my learnings at Lighthou
 **express**
 API for creating server environment and request, response CRUD methods
 
-**body-parser**
-Interpret keys and values in request data to object format
-
 **react**
-Front-end framework to render html elements
+Front-end framework to render html elements with state, side-effect
+
+**WebSocket**
+Open connection with server for updates
 
 ## Getting Started
 
