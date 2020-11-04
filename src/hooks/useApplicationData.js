@@ -42,6 +42,7 @@ export default function useApplicationData() {
           .then(data => dispatch({ type: update.type, interview, id, days: data.data }));
       }
     });
+    return () => socket.close();
   }, []);
   const setDay = day => dispatch({ type: SET_DAY, day });
 
