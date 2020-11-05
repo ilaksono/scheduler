@@ -50,9 +50,11 @@ export default function Appointment(p) {
         transition(ERROR_DELETE, true);
       });
   };
+
   const errorClose = () => {
     back();
     back();
+    setErrMsg('');
   };
   const edit = () => transition(EDIT);
   const msg = 'Are you sure you would like to delete?';
@@ -60,7 +62,7 @@ export default function Appointment(p) {
     p.interview ? transition(SHOW) : transition(EMPTY);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [p.interview]);
-  
+
   return (
     <article className="appointment" data-testid="appointment">
       <Header id={p.id} time={p.time} />
@@ -73,11 +75,17 @@ export default function Appointment(p) {
           onEdit={edit}
         />
       )}
-      {mode === CREATE && <Form onCancel={back} onSave={save} interviewers={p.interviewers} setErrMsg={setErrMsg} errMsg={errMsg}/>}
+      {mode === CREATE && <Form onCancel={back} onSave={save} interviewers={p.interviewers} setErrMsg={setErrMsg} errMsg={errMsg} />}
       {mode === SAVING && <Status message='Saving' />}
       {mode === DELETING && <Status message='Deleting' />}
       {mode === CONFIRM && <Confirm id={p.id} onCancel={cancelConfirm} message={msg} onConfirm={destoy} />}
-      {mode === EDIT && <Form name={student} interviewer={interviewer.id} onCancel={back} onSave={save} interviewers={p.interviewers} setErrMsg={setErrMsg} errMsg={errMsg}/>}
+      {mode === EDIT && <Form name={student}
+        interviewer={interviewer.id}
+        onCancel={back}
+        onSave={save}
+        interviewers={p.interviewers}
+        setErrMsg={setErrMsg}
+        errMsg={errMsg} />}
       {mode === ERROR_SAVE && <Error message={errMsg} onClose={errorClose} />}
       {mode === ERROR_DELETE && <Error message={errMsg} onClose={errorClose} />}
 

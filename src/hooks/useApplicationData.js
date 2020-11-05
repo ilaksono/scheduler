@@ -2,7 +2,6 @@ import { useEffect, useReducer } from "react";
 import axios from 'axios';
 import { reducer, SET_DATA, SET_DAY, CANCEL, BOOK } from 'reducers/application.js';
 
-
 const initData = {
   day: 'Monday',
   days: [],
@@ -25,7 +24,8 @@ export default function useApplicationData() {
           appointments: all[1].data,
           interviewers: all[2].data
         });
-      });
+      })
+      .catch(er => console.log(er));
   }, []);
 
   useEffect(() => { // on mount - add websocket listener to trigger render on update
@@ -39,14 +39,15 @@ export default function useApplicationData() {
       if (update.type) { // check type of parsed message to filter messages
         const { interview, id } = update;
         axios.get('api/days')
-          .then(data => dispatch({ type: update.type, interview, id, days: data.data }));
+          .then(data => dispatch({ type: update.type, interview, id, days: data.data }))
+          .catch(er => console.log(er));
       }
     });
     return () => socket.close();
   }, []);
   const setDay = day => dispatch({ type: SET_DAY, day });
 
-  // create appointments copy then dispatch
+  // create appointments copy, then dispatch
   function bookInterview(id, interview) {
     const appointment = {
       ...state.appointments[id],
@@ -63,12 +64,14 @@ export default function useApplicationData() {
             type: BOOK,
             appointments,
             days: data.data
-          });
+          })
+            .catch(er => console.log(er));
           return state;
-        }));
+        })).catch(err => console.log(err));
   };
 
-  // create appointments copy with deleted app then dispatch
+  // create appointments copy with deleted app,
+  // then dispatch
   function cancelInterview(id) {
     const appointment =
       { ...state.appointments[id], interview: null };
@@ -76,7 +79,8 @@ export default function useApplicationData() {
       { ...state.appointments, [id]: appointment };
     return axios.delete(`/api/appointments/${id}`)
       .then(() => {
-        return axios.get('/api/days'); // axios request to update days before rendering
+        // axios request to update days before rendering
+        return axios.get('/api/days'); 
       }).then(data => {
         dispatch({
           type: CANCEL,
@@ -84,7 +88,8 @@ export default function useApplicationData() {
           days: data.data
         });
         return state;
-      });
+      })
+      .catch(er => console.log(er));
   };
   return {
     state,
