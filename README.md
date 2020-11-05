@@ -36,7 +36,7 @@ Open connection with server for updates
 
 ## Documentation
 
-**The following function componenets can be found in /src/components:**
+**The following function components can be found in /src/components:**
 
 - `Application`: returns all elements in the single page app
 - `Button`: calculate time since post, returns string to be appended in script
@@ -57,7 +57,7 @@ Open connection with server for updates
 - `Header`: shows start time for appointment
 - `Confirm`: shows confirmation modal
 
-**The following hooks can be found in /src/hooks:**
+**The following custom hooks can be found in /src/hooks:**
 
 - `useApplicationData()`: returns parent state for Application, and methods to create/delete interviews to pass in child components
 - `useVisualMode()`: returns an instance of state - transition method, current mode, and history array for each appointment article
