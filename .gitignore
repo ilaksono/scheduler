@@ -24,3 +24,13 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+
+
+scheduler-api/.DS_Store
+
+scheduler-api/.env
+scheduler-api/.env.development
+scheduler-api/.env.test
+
+scheduler-api/node_modules/
+scheduler-api/coverage/
